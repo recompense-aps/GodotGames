@@ -1,5 +1,5 @@
 using Godot;
-using System;
+using HonedGodot;
 
 public enum BaseShipType { Red, Blue, Green, Yellow }
 public enum ShipDamageLevel { Healthy, Damaged, VeryDamaged }

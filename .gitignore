@@ -1,3 +1,7 @@
+# vscode and visual studio
+.vs
+.vscode
+
 # Godot-specific ignores
 .import/
 export.cfg
@@ -7,8 +11,14 @@ export_presets.cfg
 *.translation
 
 # Mono-specific ignores
-.mono/
+/.mono/
 data_*/
+packages/
 
-# vscode
-.vscode/
+# bodot stuff
+builds/
+bodotlog
+bodot.config
+
+# local stuff
+honed-godot/
