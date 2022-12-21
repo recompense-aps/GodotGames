@@ -1,12 +1,14 @@
 using Godot;
+using HonedGodot;
 using HonedGodot.Extensions;
 
+[LoadScene("res://Explosion.tscn")]
 public class Explosion : AnimatedSprite
 {
-	private static PackedScene scene = GD.Load<PackedScene>("res://Explosion.tscn");
 	public static Explosion InstanceAt(Node context, Vector2 globalPosition)
 	{
-		var explosion = scene.Instance<Explosion>();
+		var explosion = SceneLoader.Instance<Explosion>();
+		
 		explosion.GlobalPosition = globalPosition;
 		context.AddChild(explosion);
 
@@ -17,9 +19,6 @@ public class Explosion : AnimatedSprite
     {
 		Play();
 
-        this.InlineConnect(this, "animation_finished", () => 
-		{
-			QueueFree();
-		});
+        this.InlineConnect(this, "animation_finished", QueueFree);
     }
 }

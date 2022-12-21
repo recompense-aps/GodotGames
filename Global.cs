@@ -18,6 +18,7 @@ public class Global : Node
     {
 		Instance = this;
         HonedGodot.ErrorHandling.Configure("res://ErrorScreen.tscn", this);
+		HonedGodot.SceneLoader.Load();
     }
 
  	public override void _Process(float delta)
