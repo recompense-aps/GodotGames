@@ -26,12 +26,18 @@ public class KeyboardController : Node
 		if (Input.IsActionPressed("key_move_down"))
 			y = 1;
 
-		ship.MoveTowards(new Vector2(x,y));
+		if (x != 0 || y != 0)
+			ship.MoveTowards(new Vector2(x,y));
+		else
+			ship.MoveStop();
 
 		if (Input.IsActionJustPressed("mouse_shoot_right"))
 			ship.Shoot(true);
 
 		if (Input.IsActionJustPressed("mouse_shoot_left"))
 			ship.Shoot(false);
+
+		if (Input.IsActionJustPressed("boost_ship"))
+			ship.Boost();
 	}
 }

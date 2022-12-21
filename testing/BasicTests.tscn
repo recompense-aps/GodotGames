@@ -12,6 +12,7 @@ script = ExtResource( 4 )
 
 [node name="Ship" parent="." instance=ExtResource( 1 )]
 position = Vector2( 252, 155 )
+Debug = true
 
 [node name="KeyboardController" parent="Ship" instance=ExtResource( 3 )]
 
