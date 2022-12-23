@@ -1,13 +1,16 @@
-[gd_scene load_steps=4 format=2]
+[gd_scene load_steps=5 format=2]
 
 [ext_resource path="res://ShipSprites.tscn" type="PackedScene" id=1]
 [ext_resource path="res://Ship.cs" type="Script" id=2]
+[ext_resource path="res://assets/Ship parts/cannonLoose.png" type="Texture" id=3]
 
 [sub_resource type="CapsuleShape2D" id=1]
 radius = 22.0
 height = 70.0
 
-[node name="Ship" type="KinematicBody2D"]
+[node name="Ship" type="RigidBody2D"]
+gravity_scale = 0.0
+contact_monitor = true
 script = ExtResource( 2 )
 
 [node name="ShipSprites" parent="." instance=ExtResource( 1 )]
@@ -20,3 +23,30 @@ position = Vector2( 10, 0 )
 
 [node name="LeftShootPoint" type="Node2D" parent="."]
 position = Vector2( -10, 0 )
+
+[node name="CannonSpriteRight" type="Sprite" parent="."]
+position = Vector2( 5, 16 )
+texture = ExtResource( 3 )
+offset = Vector2( 8, 0 )
+
+[node name="ShootPosition" type="Node2D" parent="CannonSpriteRight"]
+position = Vector2( 40, -1 )
+
+[node name="ColorRect" type="ColorRect" parent="CannonSpriteRight/ShootPosition"]
+margin_right = 5.0
+margin_bottom = 4.0
+color = Color( 0.988235, 0.0705882, 0.0705882, 1 )
+
+[node name="CannonSpriteLeft" type="Sprite" parent="."]
+position = Vector2( -5, 16 )
+rotation = 3.14159
+texture = ExtResource( 3 )
+offset = Vector2( 8, 0 )
+
+[node name="ShootPosition" type="Node2D" parent="CannonSpriteLeft"]
+position = Vector2( 40, -1 )
+
+[node name="ColorRect" type="ColorRect" parent="CannonSpriteLeft/ShootPosition"]
+margin_right = 5.0
+margin_bottom = 4.0
+color = Color( 0.988235, 0.0705882, 0.0705882, 1 )

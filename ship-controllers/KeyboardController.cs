@@ -14,30 +14,21 @@ public class KeyboardController : Node
 	{
 		float x=0, y=0;
 
-		if (Input.IsActionPressed("key_move_right"))
+		if (Input.IsActionPressed(Inputs.key_move_right))
 			x = 1;
 
-		if (Input.IsActionPressed("key_move_left"))
+		if (Input.IsActionPressed(Inputs.key_move_left))
 			x = -1;
 
-		if (Input.IsActionPressed("key_move_up"))
+		if (Input.IsActionPressed(Inputs.key_move_up))
 			y = -1;
 
-		if (Input.IsActionPressed("key_move_down"))
+		if (Input.IsActionPressed(Inputs.key_move_down))
 			y = 1;
 
-		if (x != 0 || y != 0)
-			ship.MoveTowards(new Vector2(x,y));
-		else
-			ship.MoveStop();
+		ship.Move(new Vector2(x, y));
 
-		if (Input.IsActionJustPressed("mouse_shoot_right"))
-			ship.Shoot(true);
-
-		if (Input.IsActionJustPressed("mouse_shoot_left"))
-			ship.Shoot(false);
-
-		if (Input.IsActionJustPressed("boost_ship"))
+		if (Input.IsActionJustPressed(Inputs.boost_ship))
 			ship.Boost();
 	}
 }

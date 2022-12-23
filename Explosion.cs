@@ -9,8 +9,8 @@ public class Explosion : AnimatedSprite
 	{
 		var explosion = SceneLoader.Instance<Explosion>();
 		
+		context.GetTree().Root.AddChild(explosion);
 		explosion.GlobalPosition = globalPosition;
-		context.AddChild(explosion);
 
 		return explosion;
 	}

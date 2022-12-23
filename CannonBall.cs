@@ -1,14 +1,16 @@
 using Godot;
-using System;
+using HonedGodot;
+using HonedGodot.Extensions;
 
-public class CannonBall : Area2D
+public class CannonBall : RigidBody2D
 {
     [Export]
-	public float BaseSpeed = 3000;
+	public float BaseImpulse { get; private set; } = 500;
 
 	public Ship Shooter { get; private set; }
 
 	private Vector2 fireDirection = new Vector2(0,0);
+	private bool appliedImpulse = false;
 
 	private static readonly PackedScene scene = GD.Load<PackedScene>("res://CannonBall.tscn");
 
@@ -23,8 +25,46 @@ public class CannonBall : Area2D
 		return ball;
 	}
 
-	public override void _Process(float delta)
+	public override void _Ready()
 	{
-		GlobalPosition += (delta * fireDirection * BaseSpeed);
+		Global.CollisionLayers.SetLayers(this, CollisionLayers.Projectiles);
+		Global.CollisionLayers.SetMasks(this, CollisionLayers.Ships, CollisionLayers.Zones);
+
+		this.InlineCallDeffered(() => 
+		{
+			Global.Log($"created cannon ball at [{GlobalPosition}] owned by {this.GetTag<GameOwner>()?.Data?.Name}", LogTag.ConnonBall);
+		});
+
+		this.InlineConnect<Node>(this, Constants.Signal_RigidBody2D_BodyEntered, node => 
+		{
+			Global.Log($"cannon ball owned by {this.GetTag<GameOwner>()?.Data?.Name} collided with {node.Name}", LogTag.ConnonBall);
+
+			if (node is ICannonBallListener)
+				node.As<ICannonBallListener>().OnCollision(this);
+		});
+
+	}
+
+	public override void _IntegrateForces(Physics2DDirectBodyState state)
+	{
+		if (!appliedImpulse)
+		{
+			ApplyImpulse(Vector2.Zero, fireDirection * BaseImpulse);
+			appliedImpulse = true;
+		}
+	}
+
+	public void Explode()
+	{
+		Explosion.InstanceAt(this, GlobalPosition);
+
+		this.InlineCallDeffered(QueueFree);
 	}
 }
+
+public interface ICannonBallListener
+{
+	CannonBallCollisionResponse OnCollision(CannonBall ball);
+}
+
+public class CannonBallCollisionResponse { }

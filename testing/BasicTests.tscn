@@ -1,19 +1,90 @@
-[gd_scene load_steps=5 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://maps/DefaultMap.tscn" type="PackedScene" id=2]
-[ext_resource path="res://ship-controllers/KeyboardController.tscn" type="PackedScene" id=3]
+[ext_resource path="res://ship-controllers/GamePadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://testing/BasicTests.cs" type="Script" id=4]
+[ext_resource path="res://WayPoint.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Zone.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Crewman.tscn" type="PackedScene" id=7]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 158.5, 159.5 )
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 89, 1205.75 )
+
+[sub_resource type="RectangleShape2D" id=3]
+extents = Vector2( 1274.5, 81.5 )
+
+[sub_resource type="RectangleShape2D" id=4]
+extents = Vector2( 1244, 117 )
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 179.5, 724.5 )
 
 [node name="BasicTest" type="Node2D"]
 script = ExtResource( 4 )
 
 [node name="DefaultMap" parent="." instance=ExtResource( 2 )]
+__meta__ = {
+"_edit_lock_": true
+}
 
 [node name="Ship" parent="." instance=ExtResource( 1 )]
 position = Vector2( 252, 155 )
+__meta__ = {
+"_edit_lock_": true
+}
 Debug = true
 
-[node name="KeyboardController" parent="Ship" instance=ExtResource( 3 )]
+[node name="GamePadController" parent="Ship" instance=ExtResource( 3 )]
 
-[node name="TestPoint" type="Node2D" parent="."]
+[node name="Waypoint" parent="." instance=ExtResource( 5 )]
+position = Vector2( 868, 516 )
+
+[node name="Zone" parent="." instance=ExtResource( 6 )]
+position = Vector2( 206, 340 )
+Type = 1
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Zone"]
+position = Vector2( 655.5, 203.5 )
+shape = SubResource( 1 )
+
+[node name="Crewman" parent="." instance=ExtResource( 7 )]
+position = Vector2( 909, 144 )
+Debug = true
+
+[node name="Ship2" parent="." instance=ExtResource( 1 )]
+position = Vector2( 675, 167 )
+BaseShipType = 2
+
+[node name="OutOfBounds1" parent="." instance=ExtResource( 6 )]
+position = Vector2( -222, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds1"]
+position = Vector2( 0, 345.25 )
+shape = SubResource( 2 )
+
+[node name="OutOfBounds2" parent="." instance=ExtResource( 6 )]
+position = Vector2( 0, -177 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds2"]
+position = Vector2( 1145.5, -56.5 )
+shape = SubResource( 3 )
+
+[node name="OutOfBounds3" parent="." instance=ExtResource( 6 )]
+position = Vector2( 4, 1322 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds3"]
+position = Vector2( 1111, 107 )
+shape = SubResource( 4 )
+
+[node name="OutOfBounds4" parent="." instance=ExtResource( 6 )]
+position = Vector2( 2230, 84 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="OutOfBounds4"]
+position = Vector2( 169.5, 495.5 )
+shape = SubResource( 5 )
+
+[editable path="Zone"]

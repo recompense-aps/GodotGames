@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://WayPoint.cs" type="Script" id=1]
+[ext_resource path="res://assets/Ship parts/flag (3).png" type="Texture" id=2]
+
+[node name="Waypoint" type="Sprite" groups=["WayPoint"]]
+scale = Vector2( 5, 3 )
+texture = ExtResource( 2 )
+script = ExtResource( 1 )

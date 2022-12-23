@@ -6,9 +6,11 @@
 [sub_resource type="CircleShape2D" id=1]
 radius = 4.0
 
-[node name="CannonBall" type="Area2D"]
+[node name="CannonBall" type="RigidBody2D"]
+gravity_scale = 0.0
+contacts_reported = 5
+contact_monitor = true
 script = ExtResource( 2 )
-BaseSpeed = 300.0
 
 [node name="Sprite" type="Sprite" parent="."]
 texture = ExtResource( 1 )

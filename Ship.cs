@@ -2,61 +2,68 @@ using Godot;
 using HonedGodot;
 using HonedGodot.Extensions;
 using System;
+using System.Collections.Generic;
 
 public enum BaseShipType { Red, Blue, Green, Yellow }
 public enum ShipDamageLevel { Healthy, Damaged, VeryDamaged }
-public class Ship : KinematicBody2D
+public class Ship : RigidBody2D, ICannonBallListener
 {
 	[Export]
 	private bool Debug = false;
 
 	[Export]
-	public BaseShipType BaseShipType = BaseShipType.Red;
+	public BaseShipType BaseShipType { get; private set; }  = BaseShipType.Red;
 
 	[Export]
-	public ShipDamageLevel DamageLevel = ShipDamageLevel.Healthy;
+	public ShipDamageLevel DamageLevel { get; private set; } = ShipDamageLevel.Healthy;
 
 	[Export]
-	private float BaseSpeed = 100;
+	public float BaseLinearMovementForceModifier { get; private set; } = 100;
 
 	[Export]
-	private float BaseAcceleration = 1;
+	public float BaseShootImpulseModifier { get; private set; } = 10;
 
-	[Export]
-	private float MaxMovementSpeed = 200;
-
-	[Export]
-	private float BoostFactor = 2;
-
-	private Vector2 baseMovementDirection { get; set; }
-	private Vector2 rightShootPosition => GetNode<Node2D>("RightShootPoint").Position;
-	private Vector2 leftShootPosition => GetNode<Node2D>("LeftShootPoint").Position;
-	private float ComputedMovementSpeed => Mathf.Clamp(BaseSpeed + movingSpeedModifier, 0, MaxMovementSpeed);
-	private Vector2 velocity => baseMovementDirection * ComputedMovementSpeed * speedModifier;
-	private float speedModifier { get; set; } = 1;
-	private float movingSpeedModifier = 0;
+	private Vector2 moveVector { get; set; }
 	private Func<bool> boostLock { get; set; } = () => true;
+	private Vector2 shootPositionRight => GetNode<Node2D>("CannonSpriteRight/ShootPosition").GlobalPosition;
+	private Vector2 shootPositionLeft => GetNode<Node2D>("CannonSpriteLeft/ShootPosition").GlobalPosition;
+	private Stack<Action> physicsActions = new Stack<Action>();
 	
     public override void _Ready()
     {
+		HG.GetNodes(this);
+
+		this.Tag<GameOwner>(GameOwner.Computer);
+
+		Global.CollisionLayers.SetLayers(this, 
+			CollisionLayers.Ships
+		);
+		Global.CollisionLayers.SetMasks(this, 
+			CollisionLayers.Ships,
+			CollisionLayers.Land,
+			CollisionLayers.Zones
+		);
+
 		if (Debug)
 		{
-			NodeInfo.Add(this,
-				() => $"v:  {velocity}",
-				() => $"ms: {movingSpeedModifier}",
-				() => $"sm: {speedModifier}"
-			).WithPosition(new Vector2(0, -125));
+			NodeInfo
+				.Create(this)
+				.AddForCollisionLayerManagement(Global.CollisionLayers)
+				.WithPosition(new Vector2(0, -150));
 		}
     }
 
-	public override void _Process(float delta)
+	public override void _IntegrateForces(Physics2DDirectBodyState state)
 	{
-		movingSpeedModifier = Mathf.Clamp(movingSpeedModifier, 0, 50);
-	}
+		var normalizedVelocity = state.LinearVelocity.Normalized();
+		var linearForce = BaseLinearMovementForceModifier * moveVector;
 
-	public override void _PhysicsProcess(float delta)
-	{
-		MoveAndSlide(velocity);
+		AppliedForce = linearForce;
+
+		Rotation = normalizedVelocity.Angle() - ( Mathf.Pi / 2 );
+
+		while(physicsActions.Count > 0)
+			physicsActions.Pop()();
 	}
 
 	public void HandleCannonBallCollision(CannonBall ball)
@@ -64,54 +71,42 @@ public class Ship : KinematicBody2D
 		throw new NotImplementedException();
 	}
 
-	public void MoveTowards(Vector2 vector)
+	public void Move(Vector2 newMoveVector)
 	{
-		
-		movingSpeedModifier += BaseAcceleration;
-		baseMovementDirection = vector.Normalized();
-		Rotation = baseMovementDirection.Length() > 0 ?
-			vector.Angle() - ( Mathf.Pi / 2 ) :
-			Rotation;
+		moveVector = newMoveVector;
 	}
 
-	public void MoveStop()
+	public void Shoot(bool right = true)
 	{
-		if (movingSpeedModifier > 0)
-		{
-			movingSpeedModifier -= BaseAcceleration;
-		}
-		else
-		{
-			movingSpeedModifier = 0;
-			baseMovementDirection = Vector2.Zero;
-		}
-	}
+		var shootPosition = right ? shootPositionRight : shootPositionLeft;
+		var shootVector = new Vector2(right ? 1 : -1, 0).Rotated(Rotation);
 
-	public void Shoot(bool right)
-	{
-		if (right)
-		{
-			CannonBall.InstanceAndFire(this, Position + rightShootPosition, new Vector2(1, 0).Rotated(Rotation));
-			Explosion.InstanceAt(this, rightShootPosition);
-		}
-		else
-		{
-			CannonBall.InstanceAndFire(this, Position + leftShootPosition, new Vector2(-1, 0).Rotated(Rotation));
-			Explosion.InstanceAt(this, leftShootPosition);
-		}
+		var cannonBall = CannonBall.InstanceAndFire(this, shootPosition, shootVector);
 
-		baseMovementDirection += (-1 * baseMovementDirection / 2);
+		cannonBall.AddCollisionExceptionWith(this);
+
+		this.GetTag<GameOwner>().Propagate(
+			cannonBall,
+			Explosion.InstanceAt(this, shootPosition)
+		);
 	}
 
 	public void Boost()
 	{
-		if (!boostLock())
-			return;
+		// if (!boostLock())
+		// 	return;
 		
-		boostLock = this.TemporaryEffect(
-			() => speedModifier *= 2,
-			() => speedModifier /= 2,
-			1
-		);
+		// boostLock = this.TemporaryEffect(
+		// 	() => speedModifier *= 2,
+		// 	() => speedModifier /= 2,
+		// 	1
+		// );
+	}
+
+	public CannonBallCollisionResponse OnCollision(CannonBall ball)
+	{
+		ball.Explode();
+
+		return new CannonBallCollisionResponse();
 	}
 }
