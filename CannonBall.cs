@@ -57,6 +57,7 @@ public class CannonBall : RigidBody2D
 	public void Explode()
 	{
 		Explosion.InstanceAt(this, GlobalPosition);
+		GetTree().Root.AddChild(SceneLoader.Instance<CannonSoundEffect>());
 
 		this.InlineCallDeffered(QueueFree);
 	}

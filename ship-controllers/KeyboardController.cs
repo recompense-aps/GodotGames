@@ -12,23 +12,23 @@ public class KeyboardController : Node
 
  	public override void _Process(float delta)
 	{
-		float x=0, y=0;
+		var movementVector = Input.GetVector(
+			Inputs.key_move_left,
+			Inputs.key_move_right,
+			Inputs.key_move_up,
+			Inputs.key_move_down
+		);
 
-		if (Input.IsActionPressed(Inputs.key_move_right))
-			x = 1;
+		ship.Move(movementVector);
 
-		if (Input.IsActionPressed(Inputs.key_move_left))
-			x = -1;
+		if (Input.IsActionJustPressed(Inputs.mouse_shoot_right))
+		{
+			ship.Shoot(true);
+		}
 
-		if (Input.IsActionPressed(Inputs.key_move_up))
-			y = -1;
-
-		if (Input.IsActionPressed(Inputs.key_move_down))
-			y = 1;
-
-		ship.Move(new Vector2(x, y));
-
-		if (Input.IsActionJustPressed(Inputs.boost_ship))
-			ship.Boost();
+		if (Input.IsActionJustPressed(Inputs.mouse_shoot_left))
+		{
+			ship.Shoot(false);
+		}
 	}
 }

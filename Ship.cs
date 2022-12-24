@@ -49,7 +49,7 @@ public class Ship : RigidBody2D, ICannonBallListener
 			NodeInfo
 				.Create(this)
 				.AddForCollisionLayerManagement(Global.CollisionLayers)
-				.WithPosition(new Vector2(0, -150));
+				.WithPosition(new Vector2(0, -75));
 		}
     }
 
@@ -59,7 +59,6 @@ public class Ship : RigidBody2D, ICannonBallListener
 		var linearForce = BaseLinearMovementForceModifier * moveVector;
 
 		AppliedForce = linearForce;
-
 		Rotation = normalizedVelocity.Angle() - ( Mathf.Pi / 2 );
 
 		while(physicsActions.Count > 0)
@@ -89,6 +88,8 @@ public class Ship : RigidBody2D, ICannonBallListener
 			cannonBall,
 			Explosion.InstanceAt(this, shootPosition)
 		);
+
+		AddChild(SceneLoader.Instance<CannonSoundEffect>());
 	}
 
 	public void Boost()

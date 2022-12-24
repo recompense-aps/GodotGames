@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/ingametheme-sample.mp3-70ffbbe6c8c267d247805ba7a61a6e6d.mp3str"
+
+[deps]
+
+source_file="res://assets/audio/ingametheme-sample.mp3"
+dest_files=[ "res://.import/ingametheme-sample.mp3-70ffbbe6c8c267d247805ba7a61a6e6d.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

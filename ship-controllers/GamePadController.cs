@@ -21,13 +21,6 @@ public class GamePadController : Node
 			$"joystick_left_down_{DeviceIndex}"
 		);
 
-		var cannonVector = Input.GetVector(
-			$"joystick_right_left_{DeviceIndex}",
-			$"joystick_right_right_{DeviceIndex}",
-			$"joystick_right_up_{DeviceIndex}",
-			$"joystick_right_down_{DeviceIndex}"
-		);
-
 		ship.Move(movementVector);
 
 		if (Input.IsActionJustPressed($"shoot_pad_right_{DeviceIndex}"))

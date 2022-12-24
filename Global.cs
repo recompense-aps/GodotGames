@@ -13,6 +13,9 @@ public class Global : Node
 	[Export]
 	public LogTag[] DisabledTags { get; private set; }
 
+	[Export]
+	public bool EnabledSound { get; private set; } = false;
+
 	public static readonly CollisionLayerManager<CollisionLayers> CollisionLayers = new CollisionLayerManager<CollisionLayers>();
 
 	private static readonly HonedGodot.Logger<LogTag> logger = new HonedGodot.Logger<LogTag>("game");

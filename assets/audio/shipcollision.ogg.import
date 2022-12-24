@@ -1,0 +1,15 @@
+[remap]
+
+importer="ogg_vorbis"
+type="AudioStreamOGGVorbis"
+path="res://.import/shipcollision.ogg-8150f79b3b5010d85ab6224eb9cea9c3.oggstr"
+
+[deps]
+
+source_file="res://assets/audio/shipcollision.ogg"
+dest_files=[ "res://.import/shipcollision.ogg-8150f79b3b5010d85ab6224eb9cea9c3.oggstr" ]
+
+[params]
+
+loop=true
+loop_offset=0

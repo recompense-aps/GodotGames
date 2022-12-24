@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=2]
+
+[ext_resource path="res://assets/audio/ingametheme-sample.mp3" type="AudioStream" id=1]
+[ext_resource path="res://InGameMusic.cs" type="Script" id=2]
+
+[node name="InGameMusic" type="AudioStreamPlayer"]
+stream = ExtResource( 1 )
+autoplay = true
+script = ExtResource( 2 )
