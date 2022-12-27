@@ -86,7 +86,7 @@ public class Ship : RigidBody2D, ICannonBallListener
 
 		this.GetTag<GameOwner>().Propagate(
 			cannonBall,
-			Explosion.InstanceAt(this, shootPosition)
+			Explosion.InstanceAt(this, shootPosition, Explosion.ExplosionType.Smoke)
 		);
 
 		AddChild(SceneLoader.Instance<CannonSoundEffect>());

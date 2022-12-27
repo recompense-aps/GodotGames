@@ -1,16 +1,12 @@
-[gd_scene load_steps=14 format=2]
+[gd_scene load_steps=12 format=2]
 
 [ext_resource path="res://Ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://maps/DefaultMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ship-controllers/GamePadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://testing/BasicTests.cs" type="Script" id=4]
-[ext_resource path="res://WayPoint.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Zone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ship-controllers/KeyboardController.tscn" type="PackedScene" id=7]
 [ext_resource path="res://InGameMusic.tscn" type="PackedScene" id=8]
-
-[sub_resource type="RectangleShape2D" id=1]
-extents = Vector2( 225, 161.5 )
 
 [sub_resource type="RectangleShape2D" id=2]
 extents = Vector2( 89, 1205.75 )
@@ -45,17 +41,6 @@ Debug = true
 
 [node name="KeyboardController" parent="Ship2_KeyBoard" instance=ExtResource( 7 )]
 
-[node name="Waypoint" parent="." instance=ExtResource( 5 )]
-position = Vector2( 868, 516 )
-
-[node name="TreasureZone" parent="." instance=ExtResource( 6 )]
-position = Vector2( 206, 340 )
-Type = 1
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="TreasureZone"]
-position = Vector2( 722, 205.5 )
-shape = SubResource( 1 )
-
 [node name="OutOfBounds1" parent="." instance=ExtResource( 6 )]
 position = Vector2( -222, 0 )
 
@@ -85,5 +70,3 @@ position = Vector2( 169.5, 495.5 )
 shape = SubResource( 5 )
 
 [node name="InGameMusic" parent="." instance=ExtResource( 8 )]
-
-[editable path="TreasureZone"]
