@@ -1,9 +1,10 @@
-[gd_scene load_steps=12 format=2]
+[gd_scene load_steps=13 format=2]
 
 [ext_resource path="res://Ship.tscn" type="PackedScene" id=1]
 [ext_resource path="res://maps/DefaultMap.tscn" type="PackedScene" id=2]
 [ext_resource path="res://ship-controllers/GamePadController.tscn" type="PackedScene" id=3]
 [ext_resource path="res://testing/BasicTests.cs" type="Script" id=4]
+[ext_resource path="res://Tagger.tscn" type="PackedScene" id=5]
 [ext_resource path="res://Zone.tscn" type="PackedScene" id=6]
 [ext_resource path="res://ship-controllers/KeyboardController.tscn" type="PackedScene" id=7]
 [ext_resource path="res://InGameMusic.tscn" type="PackedScene" id=8]
@@ -29,17 +30,23 @@ __meta__ = {
 }
 
 [node name="Ship1_GamePad" parent="." instance=ExtResource( 1 )]
-position = Vector2( 282, 533 )
+position = Vector2( 458, 873 )
 Debug = true
 
 [node name="GamePadController" parent="Ship1_GamePad" instance=ExtResource( 3 )]
 
+[node name="Tagger" parent="Ship1_GamePad" instance=ExtResource( 5 )]
+OwnerType = 0
+
 [node name="Ship2_KeyBoard" parent="." instance=ExtResource( 1 )]
-position = Vector2( 1639, 539 )
+position = Vector2( 1453, 204 )
 BaseShipType = 2
 Debug = true
 
 [node name="KeyboardController" parent="Ship2_KeyBoard" instance=ExtResource( 7 )]
+
+[node name="Tagger" parent="Ship2_KeyBoard" instance=ExtResource( 5 )]
+OwnerType = 1
 
 [node name="OutOfBounds1" parent="." instance=ExtResource( 6 )]
 position = Vector2( -222, 0 )

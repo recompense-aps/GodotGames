@@ -5,6 +5,7 @@ using System.Linq;
 
 public enum LogTag { General, Zone, ConnonBall }
 public enum CollisionLayers { Land, Ships, Zones, Crewman, Projectiles}
+public enum ZIndexLayer { Bottom, Top}
 
 public class Global : Node
 {

@@ -1,5 +1,7 @@
 using System;
 
+public enum OwnerEnum { Player1, Player2, Computer }
+
 public class GameOwner : Godot.Object
 {
 	public static readonly GameOwner Computer = new GameOwner("computer");
@@ -15,5 +17,10 @@ public class GameOwner : Godot.Object
 	{
 		Name = name;
 		Id = Guid.NewGuid();
+	}
+
+	public override string ToString()
+	{
+		return $"{nameof(GameOwner)}[{Name}, {Id}, {Active}]";
 	}
 }

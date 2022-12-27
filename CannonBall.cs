@@ -2,7 +2,7 @@ using Godot;
 using HonedGodot;
 using HonedGodot.Extensions;
 
-public class CannonBall : RigidBody2D
+public class CannonBall : RigidBody2D, IZoneListener
 {
     [Export]
 	public float BaseImpulse { get; private set; } = 500;
@@ -56,11 +56,23 @@ public class CannonBall : RigidBody2D
 
 	public void Explode()
 	{
-		Explosion.InstanceAt(this, GlobalPosition);
+		Explosion.InstanceAt(this, GlobalPosition, Explosion.ExplosionType.Normal);
 		GetTree().Root.AddChild(SceneLoader.Instance<CannonSoundEffect>());
 
 		this.InlineCallDeffered(QueueFree);
 	}
+
+	public void OnEnteredZone(Zone zone)
+	{
+		switch(zone.Type)
+		{
+			case Zone.ZoneType.Fort:
+				Explode();
+				break;
+		}
+	}
+
+	public void OnExitedZone(Zone zone) { }
 }
 
 public interface ICannonBallListener

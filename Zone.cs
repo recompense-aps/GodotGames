@@ -5,7 +5,7 @@ using HonedGodot.Extensions;
 
 public class Zone : Area2D
 {
-	public enum ZoneType { OutOfBounds, Land }
+	public enum ZoneType { OutOfBounds, Land, Fort }
 
 	public static List<Zone> All => Global.GetNodesInGroup<Zone>(nameof(Zone));
 

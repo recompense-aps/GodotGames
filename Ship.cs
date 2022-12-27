@@ -33,8 +33,6 @@ public class Ship : RigidBody2D, ICannonBallListener
     {
 		HG.GetNodes(this);
 
-		this.Tag<GameOwner>(GameOwner.Computer);
-
 		Global.CollisionLayers.SetLayers(this, 
 			CollisionLayers.Ships
 		);

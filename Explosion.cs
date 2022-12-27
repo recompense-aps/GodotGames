@@ -32,6 +32,8 @@ public class Explosion : AnimatedSprite
 
     public override void _Ready()
     {
+		this.SetZIndexLayer(ZIndexLayer.Top);
+		
 		Play();
 
         this.InlineConnect(this, "animation_finished", QueueFree);
