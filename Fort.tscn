@@ -37,3 +37,15 @@ Type = 2
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Zone"]
 position = Vector2( -31.5, -32.5 )
 shape = SubResource( 1 )
+
+[node name="BottomShootPoint" type="Node2D" parent="."]
+position = Vector2( -31, 61 )
+
+[node name="LeftShootPoint" type="Node2D" parent="."]
+position = Vector2( -129, -34 )
+
+[node name="TopShootPoint" type="Node2D" parent="."]
+position = Vector2( -31, -131 )
+
+[node name="RightShootPoint" type="Node2D" parent="."]
+position = Vector2( 71, -32 )

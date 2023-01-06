@@ -36,7 +36,6 @@ public class Zone : Area2D
 
 		if (Type == ZoneType.OutOfBounds)
 		{
-			Global.Log($"Node {item.Name} was out of bounds and was destroyed", LogTag.Zone);
 			item.QueueFree();
 		}
 	}

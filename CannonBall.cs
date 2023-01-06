@@ -7,14 +7,12 @@ public class CannonBall : RigidBody2D, IZoneListener
     [Export]
 	public float BaseImpulse { get; private set; } = 500;
 
-	public Ship Shooter { get; private set; }
-
 	private Vector2 fireDirection = new Vector2(0,0);
 	private bool appliedImpulse = false;
 
 	private static readonly PackedScene scene = GD.Load<PackedScene>("res://CannonBall.tscn");
 
-	public static CannonBall InstanceAndFire(Ship shooter, Vector2 firePoint, Vector2 fireDirection)
+	public static CannonBall InstanceAndFire(Node shooter, Vector2 firePoint, Vector2 fireDirection)
 	{
 		var ball = scene.Instance<CannonBall>();
 
