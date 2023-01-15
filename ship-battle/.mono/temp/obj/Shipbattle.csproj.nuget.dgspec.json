@@ -1,0 +1,53 @@
+{
+  "format": 1,
+  "restore": {
+    "C:\\Users\\asmith\\code\\projects\\godot-games\\ship-battle\\Shipbattle.csproj": {}
+  },
+  "projects": {
+    "C:\\Users\\asmith\\code\\projects\\godot-games\\ship-battle\\Shipbattle.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "C:\\Users\\asmith\\code\\projects\\godot-games\\ship-battle\\Shipbattle.csproj",
+        "projectName": "Shipbattle",
+        "projectPath": "C:\\Users\\asmith\\code\\projects\\godot-games\\ship-battle\\Shipbattle.csproj",
+        "packagesPath": "C:\\Users\\asmith\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\asmith\\code\\projects\\godot-games\\ship-battle\\.mono\\temp\\obj\\",
+        "projectStyle": "PackageReference",
+        "fallbackFolders": [
+          "C:\\Users\\asmith\\AppData\\Roaming\\Godot\\mono\\GodotNuGetFallbackFolder",
+          "C:\\Program Files\\dotnet\\sdk\\NuGetFallbackFolder"
+        ],
+        "configFilePaths": [
+          "C:\\Users\\asmith\\AppData\\Roaming\\NuGet\\NuGet.Config",
+          "C:\\Users\\asmith\\AppData\\Roaming\\NuGet\\config\\Godot.Offline.Config",
+          "C:\\Program Files (x86)\\NuGet\\Config\\Microsoft.VisualStudio.Offline.config"
+        ],
+        "originalTargetFrameworks": [
+          "net472"
+        ],
+        "sources": {
+          "C:\\Program Files (x86)\\Microsoft SDKs\\NuGetPackages\\": {},
+          "http://pro-build1-wc:4444/nuget": {},
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "net472": {
+            "targetAlias": "net472",
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "net472": {
+          "targetAlias": "net472",
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\6.0.113\\RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

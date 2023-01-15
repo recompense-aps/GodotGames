@@ -40,8 +40,8 @@ OwnerType = 0
 
 [node name="Ship2_KeyBoard" parent="." instance=ExtResource( 1 )]
 position = Vector2( 1453, 204 )
-BaseShipType = 2
 Debug = true
+BaseShipType = 2
 
 [node name="KeyboardController" parent="Ship2_KeyBoard" instance=ExtResource( 7 )]
 
@@ -77,3 +77,7 @@ position = Vector2( 169.5, 495.5 )
 shape = SubResource( 5 )
 
 [node name="InGameMusic" parent="." instance=ExtResource( 8 )]
+
+[node name="TextEdit" type="TextEdit" parent="."]
+margin_right = 879.0
+margin_bottom = 40.0

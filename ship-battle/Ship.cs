@@ -9,7 +9,10 @@ public enum ShipDamageLevel { Healthy, Damaged, VeryDamaged }
 public class Ship : RigidBody2D, ICannonBallListener
 {
 	[Export]
-	private bool Debug = false;
+	private bool Debug { get; set; } = false;
+
+	[Export]
+	private bool Invincible { get; set; } = false;
 
 	[Export]
 	public BaseShipType BaseShipType { get; private set; }  = BaseShipType.Red;
@@ -22,6 +25,8 @@ public class Ship : RigidBody2D, ICannonBallListener
 
 	[Export]
 	public float BaseShootImpulseModifier { get; private set; } = 10;
+
+	public int Health { get; set; } = 100;
 
 	private Vector2 moveVector { get; set; }
 	private Func<bool> boostLock { get; set; } = () => true;
@@ -63,11 +68,6 @@ public class Ship : RigidBody2D, ICannonBallListener
 			physicsActions.Pop()();
 	}
 
-	public void HandleCannonBallCollision(CannonBall ball)
-	{
-		throw new NotImplementedException();
-	}
-
 	public void Move(Vector2 newMoveVector)
 	{
 		moveVector = newMoveVector;
@@ -107,5 +107,19 @@ public class Ship : RigidBody2D, ICannonBallListener
 		ball.Explode();
 
 		return new CannonBallCollisionResponse();
+	}
+
+	public void ChangeHealth(int delta)
+	{
+		if (Invincible) return;
+
+		Health = Mathf.Clamp(Health + delta, 0, 100);
+
+		if (Health < 30)
+			DamageLevel = ShipDamageLevel.VeryDamaged;
+		else if (Health < 60)
+			DamageLevel = ShipDamageLevel.Damaged;
+		else
+			DamageLevel = ShipDamageLevel.Healthy;
 	}
 }
